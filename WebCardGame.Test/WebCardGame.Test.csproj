@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="Moq" Version="4.17.2" />
+    <PackageReference Include="NUnit" Version="3.13.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
+    <PackageReference Include="coverlet.collector" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ApiTests\" />
+    <Folder Include="RepositoryTests\DeletableRepositoryTests\" />
+    <Folder Include="ServiceTests\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebCardGame.Api\WebCardGame.Api.csproj" />
+    <ProjectReference Include="..\WebCardGame.Common\WebCardGame.Common.csproj" />
+    <ProjectReference Include="..\WebCardGame.Data\WebCardGame.Data.csproj" />
+    <ProjectReference Include="..\WebCardGame.Service\WebCardGame.Service.csproj" />
+  </ItemGroup>
+
+</Project>
