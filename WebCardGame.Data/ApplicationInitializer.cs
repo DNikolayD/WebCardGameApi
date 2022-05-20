@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using WebCardGame.Data.DataEntities;
 using WebCardGame.Data.DataEntities.CardDataEntities;
+using WebCardGame.Data.DataEntities.IdentityDataEntities;
 using WebCardGame.Data.Repositories;
 
 namespace WebCardGame.Data
@@ -91,14 +91,14 @@ namespace WebCardGame.Data
                 Name = "Public"
             };
 
-            await _deckTypeRepository.InsertAsync(deckTypeData);
-            deckTypeData = new()
+            //await _deckTypeRepository.InsertAsync(deckTypeData);
+            deckTypeData = new DeckTypeDataEntity
             {
                 CreatedOn = DateTime.UtcNow,
                 Description = "Deck type that makes a deck useable only by its creator",
                 Name = "Private"
             };
-            await _deckTypeRepository.InsertAsync(deckTypeData);
+            //await _deckTypeRepository.InsertAsync(deckTypeData);
             await _deckTypeRepository.SaveAsync();
         }
     }

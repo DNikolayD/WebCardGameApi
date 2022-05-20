@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using WebCardGame.Data.DataEntities.Base;
 
-namespace WebCardGame.Data.DataEntities
+namespace WebCardGame.Data.DataEntities.IdentityDataEntities
 {
     public class UserDataEntity : IdentityUser, IDeletableDataEntity<object>
     {

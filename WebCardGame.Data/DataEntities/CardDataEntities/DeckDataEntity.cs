@@ -1,10 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WebCardGame.Common.Checkers;
-using WebCardGame.Common.CustomValidationAttributes;
 using WebCardGame.Data.DataEntities.Base;
-using static WebCardGame.Common.Checkers.ClassNames;
-using static WebCardGame.Common.Checkers.PropertyNames;
-using static WebCardGame.Common.DataConstraints.StandardDataConstraints;
+using WebCardGame.Data.DataEntities.IdentityDataEntities;
 
 namespace WebCardGame.Data.DataEntities.CardDataEntities
 {
@@ -13,15 +9,12 @@ namespace WebCardGame.Data.DataEntities.CardDataEntities
         [Key]
         public string Id { get; set; }
 
-        [UniversalValidation(DeckClassName, NamePropertyName, CheckType.All, true, MaxNameLength, MinNameLength)]
         public string Name { get; set; }
 
-        [UniversalValidation(DeckClassName, TypePropertyName, CheckType.Empty, false)]
         public int TypeId { get; set; }
 
         public DeckTypeDataEntity Type { get; set; }
 
-        [UniversalValidation(DeckClassName, CreatorPropertyName, CheckType.Empty, false)]
         public string CreatorId { get; set; }
 
         public UserDataEntity Creator { get; set; }

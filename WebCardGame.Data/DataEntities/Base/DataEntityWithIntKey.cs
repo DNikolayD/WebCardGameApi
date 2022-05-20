@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebCardGame.Data.DataEntities.Base
 {
     public abstract class DataEntityWithIntKey : IDeletableDataEntity<int>
     {
         [Key]
-        public int Id { get; set ; }
+        public int Id { get; set; }
         public bool IsActive { get; set; }
         public bool IsModified { get; set; }
         public DateTime CreatedOn { get; set; }

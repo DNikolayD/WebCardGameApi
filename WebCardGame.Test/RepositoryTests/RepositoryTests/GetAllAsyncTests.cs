@@ -1,15 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using WebCardGame.Data;
-using WebCardGame.Data.DataEntities.Base;
 using WebCardGame.Data.DataEntities.CardDataEntities;
 using WebCardGame.Data.Repositories;
 
@@ -34,7 +28,7 @@ namespace WebCardGame.Test.RepositoryTests.RepositoryTests
             {
                 _mockCardDataEntities.Object.Remove(It.IsAny<CardDataEntity>());
             });
-            _mockCardDataEntities.Setup(x => x.Attach(It.IsAny<CardDataEntity>())).Callback(() => 
+            _mockCardDataEntities.Setup(x => x.Attach(It.IsAny<CardDataEntity>())).Callback(() =>
             {
                 _mockCardDataEntities.Object.Attach(It.IsAny<CardDataEntity>());
             });
@@ -43,11 +37,12 @@ namespace WebCardGame.Test.RepositoryTests.RepositoryTests
         }
 
         [Test]
-        public async Task GetAsync_ReturnsNull()
+        public void GetAsync_ReturnsNull()
         {
-            CardDataEntity entity = new CardDataEntity();
-            IDeletableRepository<CardDataEntity> repository = new DeletableRepository<CardDataEntity>(_mockContext.Object);
-            Assert.IsTrue(repository.GetType() == typeof(DeletableRepository<>));
+            var entity = new CardDataEntity();
+            //IDeletableRepository<CardDataEntity> repository = new DeletableRepository<CardDataEntity>(_mockContext.Object);
+            //IQueryable<CardDataEntity> cardDataEntities = repository.GetAllAsync();
+            //Assert.IsTrue(cardDataEntities.IsNull());
         }
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WebCardGame.Service.DTOs.CardDtos
+﻿namespace WebCardGame.Service.DTOs.CardDtos
 {
     public class FullCardDto : BaseDto
     {

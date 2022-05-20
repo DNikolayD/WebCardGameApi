@@ -7,7 +7,7 @@ using System.Reflection;
 using WebCardGame.Api.Extantions;
 using WebCardGame.Common.Configuration;
 using WebCardGame.Data;
-using WebCardGame.Data.DataEntities;
+using WebCardGame.Data.DataEntities.IdentityDataEntities;
 using WebCardGame.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);

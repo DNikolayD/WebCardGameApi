@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using WebCardGame.Data.DataEntities;
 using WebCardGame.Data.DataEntities.Base;
 using WebCardGame.Data.DataEntities.CardDataEntities;
+using WebCardGame.Data.DataEntities.IdentityDataEntities;
 
 namespace WebCardGame.Data
 {
@@ -24,6 +24,11 @@ namespace WebCardGame.Data
         public DbSet<ImageDataEntity> Images { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
+        {
+
+        }
+
+        public ApplicationDbContext()
         {
 
         }

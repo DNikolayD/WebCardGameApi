@@ -16,7 +16,7 @@ namespace WebCardGame.Data.Repositories
 
         public async Task<bool> DeleteAsync(object id)
         {
-            T entity = (T)await this.GetByIdAsync(id);
+            var entity = (T)await this.GetByIdAsync(id);
             entity.GetType().GetProperties().Where(p => p.CanWrite && p.CanRead && p.Name.EndsWith("Id") && p.Name != "Id").ToList().ForEach(p => p.SetValue(p, null));
             this._table.Remove(entity);
             return (await _table.FindAsync(id)) != null;

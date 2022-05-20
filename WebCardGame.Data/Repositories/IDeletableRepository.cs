@@ -1,21 +1,23 @@
 ﻿using WebCardGame.Data.DataEntities.Base;
+using WebCardGame.Data.Requests;
+using WebCardGame.Data.Responses;
 
 namespace WebCardGame.Data.Repositories
 {
     public interface IDeletableRepository<T> where T : class, IDeletableDataEntity<object>
     {
-        IQueryable<T> GetAllAsync();
+        Task<BaseDataResponse> GetAllAsync();
 
-        Task<IQueryable<T>> GetByIdAsync(object id);
+        Task<BaseDataResponse> GetByIdAsync(BaseDataRequest request);
 
-        Task<IQueryable<T>> InsertAsync(T obj);
+        Task<BaseDataResponse> InsertAsync(BaseDataRequest request);
 
-        IQueryable<T> Update(T obj);
+        Task<BaseDataResponse> UpdateAsync(BaseDataRequest request);
 
-        Task<bool> DeleteAsync(object id);
+        Task<BaseDataResponse> DeleteAsync(BaseDataRequest request);
 
-        Task SaveAsync();
+        Task<BaseDataResponse> SaveAsync();
 
-        Task<IQueryable<T>> FillterAsync(string propertyName, object value);
+        Task<BaseDataResponse> FilterAsync(BaseDataRequest request);
     }
 }
