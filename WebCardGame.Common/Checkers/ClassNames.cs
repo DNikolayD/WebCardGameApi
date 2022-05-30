@@ -1,6 +1,6 @@
 ﻿namespace WebCardGame.Common.Checkers
 {
-    public class ClassNames
+    public static class ClassNames
     {
         public const string CardClassName = "Card";
 

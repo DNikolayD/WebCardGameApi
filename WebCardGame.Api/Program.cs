@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
-using WebCardGame.Api.Extantions;
+using WebCardGame.Api.Extensions;
 using WebCardGame.Common.Configuration;
 using WebCardGame.Data;
 using WebCardGame.Data.DataEntities.IdentityDataEntities;

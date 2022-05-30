@@ -23,10 +23,18 @@ namespace WebCardGame.Data.DataEntities.CardDataEntities
 
         public string CreatorId { get; set; }
 
-        public UserDataEntity Creator { get; set; }
+        public virtual UserDataEntity Creator { get; set; }
 
         public string? DeckId { get; set; }
 
         public virtual DeckDataEntity? Deck { get; set; }
+
+        public CardDataEntity()
+        {
+            ImageDataEntity = new ImageDataEntity();
+            Type = new CardTypeDataEntity();
+            Effects = new List<EffectDataEntity>();
+            Creator = new UserDataEntity();
+        }
     }
 }

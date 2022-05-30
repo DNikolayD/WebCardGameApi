@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using WebCardGame.Common;
 using WebCardGame.Common.Requests;
-using WebCardGame.Data.DataEntities.Base;
 using WebCardGame.Data.Requests;
 using WebCardGame.Data.Responses;
 

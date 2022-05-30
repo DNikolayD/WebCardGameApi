@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace WebCardGame.Api.Extantions
+namespace WebCardGame.Api.Extensions
 {
     public static class ClaimsPrincipalExtensions
     {

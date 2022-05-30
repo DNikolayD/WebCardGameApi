@@ -1,12 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using WebCardGame.Data.DataEntities.Base;
+﻿using WebCardGame.Data.DataEntities.Base;
 
 
 namespace WebCardGame.Data.DataEntities.CardDataEntities
 {
     public class EffectDataEntity : DataEntityWithStringKey
     {
-
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -20,7 +18,13 @@ namespace WebCardGame.Data.DataEntities.CardDataEntities
         public int? Duration { get; set; }
 
         public string? Target { get; set; }
-        
+
         public virtual ICollection<CardDataEntity> CardDataEntities { get; set; }
+
+        public EffectDataEntity()
+        {
+            Type = new EffectTypeDataEntity();
+            CardDataEntities = new List<CardDataEntity>();
+        }
     }
 }

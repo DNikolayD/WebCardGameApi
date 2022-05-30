@@ -1,6 +1,6 @@
 ﻿namespace WebCardGame.Common.ErrorHandling
 {
-    public class StatusCodes
+    public static class StatusCodes
     {
         public const string Success = "Status code 200: Success";
 

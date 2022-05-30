@@ -1,6 +1,6 @@
 ﻿namespace WebCardGame.Common.Checkers
 {
-    public class PropertyNames
+    public static class PropertyNames
     {
         public const string NamePropertyName = "name";
 

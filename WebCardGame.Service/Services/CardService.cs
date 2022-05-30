@@ -2,75 +2,103 @@
 using WebCardGame.Data.DataEntities.CardDataEntities;
 using WebCardGame.Data.Repositories;
 using WebCardGame.Data.Requests;
-using WebCardGame.Service.DTOs.CardDtos;
+using WebCardGame.Service.DTOs.CardDTOs;
 using WebCardGame.Service.Requests;
+using WebCardGame.Service.Responses;
+using WebCardGame.Service.Validators;
 
 namespace WebCardGame.Service.Services
 {
     public class CardService : ICardService
     {
-        private readonly Type _dataEntityType;
-
-        private readonly Type _fullCardDtoType;
 
         private readonly IDeletableRepository<CardDataEntity> _repository;
 
-        public CardService(IDeletableRepository<CardDataEntity> repository)
+        private readonly FullCardDTOValidator _validator;
+
+        public CardService(IDeletableRepository<CardDataEntity> repository, FullCardDTOValidator validator)
         {
             _repository = repository;
-            _dataEntityType = typeof(CardDataEntity);
-            _fullCardDtoType = typeof(CardDataEntity);
+            _validator = validator;
         }
 
-        public async Task AddAsync(FullCardDto fullCardDto)
+        public async Task<BaseDtoResponse> AddAsync(BaseDtoRequest request)
         {
-            var request = new BaseDtoRequest()
-            {
-                Origin = "CardService AddAsync",
-                Payload = fullCardDto,
-                Type = "Insert"
-            };
+            var baseDtoResponse = new BaseDtoResponse();
+            var payload = (FullCardDto)request.Payload.MapTo(typeof(FullCardDto));
             await _repository.InsertAsync((BaseDataRequest)request.MapTo(typeof(BaseDataRequest)));
             await _repository.SaveAsync();
+            var validatedPayload = await _validator.ValidateAsync(payload);
+            baseDtoResponse.Errors = validatedPayload.Errors.Select(e => e.ErrorMessage + e.ErrorCode).ToList();
+            baseDtoResponse.IsSuccess = !baseDtoResponse.Errors.Any();
+            if (baseDtoResponse.IsSuccess)
+            {
+                baseDtoResponse.Payload = validatedPayload;
+            }
+            return baseDtoResponse;
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task<BaseDtoResponse> UpdateAsync(BaseDtoRequest request)
         {
-            var request = new BaseDtoRequest()
+            var baseDtoResponse = new BaseDtoResponse();
+            var payload = (FullCardDto)request.Payload.MapTo(typeof(FullCardDto));
+            await _repository.UpdateAsync((BaseDataRequest)request.MapTo(typeof(BaseDataRequest)));
+            await _repository.SaveAsync();
+            var validatedPayload = await _validator.ValidateAsync(payload);
+            baseDtoResponse.Errors = validatedPayload.Errors.Select(e => e.ErrorMessage + e.ErrorCode).ToList();
+            baseDtoResponse.IsSuccess = !baseDtoResponse.Errors.Any();
+            if (baseDtoResponse.IsSuccess)
             {
-                Origin = "CardService DeleteAsync",
-                Payload = id,
-                Type = "Delete"
-            };
+                baseDtoResponse.Payload = validatedPayload;
+            }
+            return baseDtoResponse;
+        }
+
+        public async Task<BaseDtoResponse> DeleteAsync(BaseDtoRequest request)
+        {
+            var baseDtoResponse = new BaseDtoResponse();
+            var payload = (FullCardDto)request.Payload.MapTo(typeof(FullCardDto));
             await _repository.DeleteAsync((BaseDataRequest)request.MapTo(typeof(BaseDataRequest)));
             await _repository.SaveAsync();
+            baseDtoResponse.IsSuccess = (await _repository.GetAllAsync()).IsSuccess;
+            if (baseDtoResponse.IsSuccess)
+            {
+                baseDtoResponse.Payload = payload;
+            }
+            return baseDtoResponse;
         }
 
-        public async Task<FullCardDto> GetAsync(string id)
+        public async Task<BaseDtoResponse> GetByIdAsync(BaseDtoRequest request)
         {
-            return null; //(FullCardDto)(await _repository.GetByIdAsync(id)).FirstOrDefault().MapTo(_fullCardDtoType);
+            var baseDtoResponse = new BaseDtoResponse();
+            var dataRequest = (BaseDataRequest)request.MapTo(typeof(BaseDataRequest));
+            var responsePayload = (FullCardDto)(await _repository.GetByIdAsync(dataRequest)).Payload.MapTo(typeof(FullCardDto));
+            var validatedPayload = await _validator.ValidateAsync(responsePayload);
+            baseDtoResponse.Errors = validatedPayload.Errors.Select(e => e.ErrorMessage + e.ErrorCode).ToList();
+            baseDtoResponse.IsSuccess = !baseDtoResponse.Errors.Any();
+            if (baseDtoResponse.IsSuccess)
+            {
+                baseDtoResponse.Payload = validatedPayload;
+            }
+
+            return baseDtoResponse;
         }
 
-        public async Task<FullCardDto> UpdateAsync(FullCardDto fullCardDto)
+        public async Task<BaseDtoResponse> GetAllAsync(BaseDtoRequest request)
         {
-            var cardDataEntity = (CardDataEntity)fullCardDto.MapTo(_dataEntityType);
-            //_repository.UpdateAsync(cardDataEntity);
-            await _repository.SaveAsync();
-            return fullCardDto;
+            var baseDtoResponse = new BaseDtoResponse();
+            var dataRequest = (BaseDataRequest)request.MapTo(typeof(BaseDataRequest));
+            var responsePayload = (List<FullCardDto>)(await _repository.GetByIdAsync(dataRequest)).Payload.MapTo(typeof(List<FullCardDto>));
+            var validatedPayload = responsePayload.Select(rp => _validator.Validate(rp));
+            baseDtoResponse.Errors =
+                (List<string>)validatedPayload.Select(vp => vp.Errors.Select(e => e.ErrorMessage + e.ErrorCode));
+            baseDtoResponse.IsSuccess = !baseDtoResponse.Errors.Any();
+            if (baseDtoResponse.IsSuccess)
+            {
+                baseDtoResponse.Payload = validatedPayload;
+            }
+
+            return baseDtoResponse;
         }
-
-        public List<FullCardDto> GetAllUnFilteredAsync()
-        {
-            //List<FullCardDto> fullCards = _repository.GetAllAsync().Select(x => (FullCardDto)x.MapTo(_fullCardDtoType)).ToList();
-            return null; //fullCards;
-        }
-
-
-        public async Task<List<FullCardDto>> GetAllFillteredAsync(string propertyName, object value)
-        {
-            //List<FullCardDto> fullCards = (await _repository.FilterAsync(propertyName, value)).Select(x => (FullCardDto)x.MapTo(_fullCardDtoType)).ToList();
-            return null; //fullCards;
-        }
-
     }
 }

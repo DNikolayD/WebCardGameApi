@@ -1,6 +1,6 @@
 ﻿using WebCardGame.Data;
 
-namespace WebCardGame.Api.Extantions
+namespace WebCardGame.Api.Extensions
 {
     public static class HostExtensions
     {

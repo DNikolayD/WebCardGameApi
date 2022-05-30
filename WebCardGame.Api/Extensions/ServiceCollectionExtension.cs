@@ -1,8 +1,8 @@
 ﻿using WebCardGame.Service.InjectionTypes;
 
-namespace WebCardGame.Api.Extantions
+namespace WebCardGame.Api.Extensions
 {
-    public static class ServiceCollectionExtention
+    public static class ServiceCollectionExtension
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {

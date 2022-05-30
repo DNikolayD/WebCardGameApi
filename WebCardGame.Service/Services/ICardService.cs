@@ -1,10 +1,19 @@
-﻿using WebCardGame.Service.DTOs.CardDtos;
-using WebCardGame.Service.InjectionTypes;
+﻿using WebCardGame.Service.InjectionTypes;
+using WebCardGame.Service.Requests;
+using WebCardGame.Service.Responses;
 
 namespace WebCardGame.Service.Services
 {
     public interface ICardService : IService
     {
-        public Task AddAsync(FullCardDto fullCardDto);
+        public Task<BaseDtoResponse> AddAsync(BaseDtoRequest request);
+
+        public Task<BaseDtoResponse> UpdateAsync(BaseDtoRequest request);
+
+        public Task<BaseDtoResponse> DeleteAsync(BaseDtoRequest request);
+
+        public Task<BaseDtoResponse> GetByIdAsync(BaseDtoRequest request);
+
+        public Task<BaseDtoResponse> GetAllAsync(BaseDtoRequest request);
     }
 }

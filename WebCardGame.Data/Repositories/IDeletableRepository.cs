@@ -1,5 +1,4 @@
-﻿using WebCardGame.Data.DataEntities.Base;
-using WebCardGame.Data.Requests;
+﻿using WebCardGame.Data.Requests;
 using WebCardGame.Data.Responses;
 
 namespace WebCardGame.Data.Repositories

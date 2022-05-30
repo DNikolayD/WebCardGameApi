@@ -9,12 +9,12 @@ namespace WebCardGame.Common.ErrorHandling
 
         public static string ConstructErrorMessage(this BaseValidationModel baseValidationModel)
         {
-            ErrorType errorType = baseValidationModel.ErrorType;
-            string originClass = baseValidationModel.OriginClass;
-            string originProperty = baseValidationModel.OriginProperty;
-            int value = baseValidationModel.Value;
+            var errorType = baseValidationModel.ErrorType;
+            var originClass = baseValidationModel.OriginClass;
+            var originProperty = baseValidationModel.OriginProperty;
+            var value = baseValidationModel.Value;
 
-            string origin = originClass + " " + originProperty;
+            var origin = originClass + " " + originProperty;
             switch (errorType)
             {
                 case ErrorType.Empty:

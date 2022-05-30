@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
-using System.Linq;
 using System.Threading;
 using WebCardGame.Data;
 using WebCardGame.Data.DataEntities.CardDataEntities;
-using WebCardGame.Data.Repositories;
 
 namespace WebCardGame.Test.RepositoryTests.RepositoryTests
 {

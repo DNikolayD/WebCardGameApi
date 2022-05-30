@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using WebCardGame.Data.DataEntities.Base;
 using WebCardGame.Data.DataEntities.CardDataEntities;
 using WebCardGame.Data.DataEntities.IdentityDataEntities;
@@ -28,7 +27,7 @@ namespace WebCardGame.Data
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
-            
+
         }
 
         public ApplicationDbContext()

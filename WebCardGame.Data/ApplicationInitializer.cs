@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using WebCardGame.Data.DataEntities.CardDataEntities;
 using WebCardGame.Data.DataEntities.IdentityDataEntities;
 using WebCardGame.Data.Repositories;
+using WebCardGame.Data.Requests;
 
 namespace WebCardGame.Data
 {
@@ -90,15 +91,22 @@ namespace WebCardGame.Data
                 Description = "Deck type that makes a deck useable by all users",
                 Name = "Public"
             };
+            var request = new BaseDataRequest
+            {
+                Type = "Insert",
+                Origin = nameof(ApplicationInitializer) + "SeedDeckTypesAsync",
+                Payload = deckTypeData
+            };
 
-            //await _deckTypeRepository.InsertAsync(deckTypeData);
+            await _deckTypeRepository.InsertAsync(request);
             deckTypeData = new DeckTypeDataEntity
             {
                 CreatedOn = DateTime.UtcNow,
                 Description = "Deck type that makes a deck useable only by its creator",
                 Name = "Private"
             };
-            //await _deckTypeRepository.InsertAsync(deckTypeData);
+            request.Payload = deckTypeData;
+            await _deckTypeRepository.InsertAsync(request);
             await _deckTypeRepository.SaveAsync();
         }
     }
