@@ -10,13 +10,13 @@ using static WebCardGame.Common.ErrorHandling.StatusCodes;
 
 namespace WebCardGame.Data.Validators
 {
-    public class CardTypeDataEntityValidator : AbstractValidator<CardTypeDataEntity>
+    public class DeckTypeDataEntityValidator : AbstractValidator<DeckTypeDataEntity>
     {
         private readonly BaseValidationModel _baseValidationModel;
 
-        public CardTypeDataEntityValidator()
+        public DeckTypeDataEntityValidator()
         {
-            _baseValidationModel = new BaseValidationModel(CardTypeClassName);
+            _baseValidationModel = new BaseValidationModel(DeckTypeClassName);
             SetRulesForName();
             SetRulesForDescription();
         }

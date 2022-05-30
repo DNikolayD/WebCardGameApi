@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
+using WebCardGame.Common.ValidationModels;
 using WebCardGame.Common;
 using WebCardGame.Common.Extensions;
-using WebCardGame.Common.ValidationModels;
 using WebCardGame.Data.DataEntities.CardDataEntities;
 using static WebCardGame.Common.Checkers.ClassNames;
 using static WebCardGame.Common.Checkers.PropertyNames;
@@ -10,34 +10,22 @@ using static WebCardGame.Common.ErrorHandling.StatusCodes;
 
 namespace WebCardGame.Data.Validators
 {
-    public class CardTypeDataEntityValidator : AbstractValidator<CardTypeDataEntity>
+    public class EffectTypeDataEntityValidator : AbstractValidator<EffectTypeDataEntity>
     {
+
         private readonly BaseValidationModel _baseValidationModel;
 
-        public CardTypeDataEntityValidator()
+        public EffectTypeDataEntityValidator()
         {
-            _baseValidationModel = new BaseValidationModel(CardTypeClassName);
-            SetRulesForName();
+            _baseValidationModel = new BaseValidationModel(EffectTypeClassName);
             SetRulesForDescription();
-        }
-
-        private void SetRulesForName()
-        {
-            _baseValidationModel.OriginProperty = NamePropertyName;
-            _baseValidationModel.ErrorCode = BadRequest;
-            var rulePointer = RuleFor(card => card.Name) as IRuleBuilder<IBaseEntity, object>;
-            rulePointer.SetNotNullRule(_baseValidationModel);
-            _baseValidationModel.Value = MinNameLength;
-            rulePointer.SetTooShortRule(_baseValidationModel);
-            _baseValidationModel.Value = MaxNameLength;
-            rulePointer.SetTooLongRule(_baseValidationModel);
         }
 
         private void SetRulesForDescription()
         {
             _baseValidationModel.OriginProperty = DescriptionPropertyName;
             _baseValidationModel.ErrorCode = BadRequest;
-            var rulePointer = RuleFor(card => card.Description) as IRuleBuilder<IBaseEntity, object>;
+            var rulePointer = RuleFor(effectType => effectType.Description) as IRuleBuilder<IBaseEntity, object>;
             rulePointer.SetNotNullRule(_baseValidationModel);
             _baseValidationModel.Value = MinDescriptionLength;
             rulePointer.SetTooShortRule(_baseValidationModel);

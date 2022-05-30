@@ -100,5 +100,22 @@ namespace WebCardGame.Service.Services
 
             return baseDtoResponse;
         }
+
+        public async Task<BaseDtoResponse> GetAllByFilter(BaseDtoRequest request)
+        {
+            var baseDtoResponse = new BaseDtoResponse();
+            var dataRequest = (BaseDataRequest)request.MapTo(typeof(BaseDataRequest));
+            var responsePayload = (List<FullCardDto>)(await _repository.GetByIdAsync(dataRequest)).Payload.MapTo(typeof(List<FullCardDto>));
+            var validatedPayload = responsePayload.Select(rp => _validator.Validate(rp));
+            baseDtoResponse.Errors =
+                (List<string>)validatedPayload.Select(vp => vp.Errors.Select(e => e.ErrorMessage + e.ErrorCode));
+            baseDtoResponse.IsSuccess = !baseDtoResponse.Errors.Any();
+            if (baseDtoResponse.IsSuccess)
+            {
+                baseDtoResponse.Payload = validatedPayload;
+            }
+
+            return baseDtoResponse;
+        }
     }
 }

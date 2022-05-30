@@ -1,4 +1,5 @@
-﻿using WebCardGame.Service.InjectionTypes;
+﻿using FluentValidation;
+using WebCardGame.Service.InjectionTypes;
 
 namespace WebCardGame.Api.Extensions
 {
@@ -31,6 +32,17 @@ namespace WebCardGame.Api.Extensions
                 }
             }
 
+            return services;
+        }
+
+        public static IServiceCollection AddDataEntityValidators(this IServiceCollection services)
+        {
+            var validatorType = typeof(AbstractValidator<>);
+            var types = validatorType.Assembly.GetExportedTypes().Where(x => x.IsClass && !x.IsAbstract);
+            foreach (var type in types)
+            {
+                services.AddTransient(validatorType, type);
+            }
             return services;
         }
     }

@@ -15,5 +15,7 @@ namespace WebCardGame.Service.Services
         public Task<BaseDtoResponse> GetByIdAsync(BaseDtoRequest request);
 
         public Task<BaseDtoResponse> GetAllAsync(BaseDtoRequest request);
+
+        public Task<BaseDtoResponse> GetAllByFilter(BaseDtoRequest request);
     }
 }
