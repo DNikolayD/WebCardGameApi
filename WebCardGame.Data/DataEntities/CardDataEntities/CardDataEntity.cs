@@ -3,7 +3,7 @@ using WebCardGame.Data.DataEntities.IdentityDataEntities;
 
 namespace WebCardGame.Data.DataEntities.CardDataEntities
 {
-    public class CardDataEntity : IDeletableDataEntity<object>
+    public class CardDataEntity : DataEntityWithStringKey
     {
         public string Name { get; set; }
 
@@ -28,27 +28,5 @@ namespace WebCardGame.Data.DataEntities.CardDataEntities
         public string? DeckId { get; set; }
 
         public virtual DeckDataEntity? Deck { get; set; }
-        public string Id { get; set; }
-
-        public bool IsActive { get; set; }
-
-        public bool IsModified { get; set; }
-
-        public DateTime CreatedOn { get; set; }
-
-        public DateTime? LastModifiedOn { get; set; }
-
-        public DateTime? DeletedOn { get; set; }
-
-        public string? ModifiedOnId { get; set; }
-
-        object IDeletableDataEntity<object>.Id { get; set; }
-
-        public CardDataEntity()
-        {
-            this.Id = Guid.NewGuid().ToString();
-            this.IsActive = true;
-            this.CreatedOn = DateTime.UtcNow;
-        }
     }
 }

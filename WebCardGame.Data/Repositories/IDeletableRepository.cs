@@ -4,7 +4,7 @@ using WebCardGame.Data.Responses;
 
 namespace WebCardGame.Data.Repositories
 {
-    public interface IDeletableRepository<T> where T : class, IDeletableDataEntity<object>
+    public interface IDeletableRepository<T> where T : class
     {
         Task<BaseDataResponse> GetAllAsync();
 

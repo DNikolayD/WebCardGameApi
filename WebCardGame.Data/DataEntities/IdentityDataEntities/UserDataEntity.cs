@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using WebCardGame.Data.DataEntities.Base;
+using WebCardGame.Data.DataEntities.CardDataEntities;
 
 namespace WebCardGame.Data.DataEntities.IdentityDataEntities
 {
-    public class UserDataEntity : IdentityUser, IDeletableDataEntity<object>
+    public class UserDataEntity : IdentityUser, IDeletableDataEntity<string>
     {
         public bool IsActive { get; set; }
 
@@ -20,6 +21,7 @@ namespace WebCardGame.Data.DataEntities.IdentityDataEntities
         public string ImageId { get; set; }
 
         public virtual ImageDataEntity ImageDataEntity { get; set; }
-        object IDeletableDataEntity<object>.Id { get; set; }
+
+        public virtual ICollection<CardDataEntity> CardDataEntities { get; set; }
     }
 }

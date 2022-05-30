@@ -11,11 +11,11 @@ namespace WebCardGame.Data.DataEntities.Base
         public DateTime CreatedOn { get; set; }
         public DateTime? LastModifiedOn { get; set; }
         public DateTime? DeletedOn { get; set; }
-        public string? ModifiedOnId { get; set; }
 
-        public DataEntityWithIntKey()
+        protected DataEntityWithIntKey()
         {
             IsActive = true;
+            IsModified = false;
             CreatedOn = DateTime.UtcNow;
         }
     }

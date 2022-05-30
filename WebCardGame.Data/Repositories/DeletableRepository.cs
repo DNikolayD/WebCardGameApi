@@ -8,7 +8,7 @@ using WebCardGame.Data.Responses;
 
 namespace WebCardGame.Data.Repositories
 {
-    public class DeletableRepository<T> : IDeletableRepository<T> where T : class, IDeletableDataEntity<object>
+    public class DeletableRepository<T> : IDeletableRepository<T> where T : class
     {
         private readonly AbstractValidator<T> _validator;
         private readonly ApplicationDbContext _context;
@@ -44,7 +44,7 @@ namespace WebCardGame.Data.Repositories
         public async Task<BaseDataResponse> GetByIdAsync(BaseDataRequest request)
         {
             var response = new BaseDataResponse();
-            var entity = await _table.FirstOrDefaultAsync(x => x.Id == request.Payload);
+            var entity = await _table.FindAsync(request.Payload);
             var validationResult = await _validator.ValidateAsync(entity);
             foreach (var error in validationResult.Errors.Select(x => x.ErrorMessage + x.ErrorCode))
             {

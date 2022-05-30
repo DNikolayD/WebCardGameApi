@@ -14,6 +14,5 @@
 
         public DateTime? DeletedOn { get; set; }
 
-        public string? ModifiedOnId { get; set; }
     }
 }

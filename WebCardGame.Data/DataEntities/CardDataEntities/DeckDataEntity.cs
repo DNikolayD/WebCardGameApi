@@ -4,10 +4,8 @@ using WebCardGame.Data.DataEntities.IdentityDataEntities;
 
 namespace WebCardGame.Data.DataEntities.CardDataEntities
 {
-    public class DeckDataEntity : IDeletableDataEntity<object>
+    public class DeckDataEntity : DataEntityWithStringKey
     {
-        [Key]
-        public string Id { get; set; }
 
         public string Name { get; set; }
 
@@ -22,20 +20,6 @@ namespace WebCardGame.Data.DataEntities.CardDataEntities
         public List<UserDataEntity> Users { get; set; }
 
         public List<CardDataEntity> Cards { get; set; }
-        object IDeletableDataEntity<object>.Id { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsModified { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime? LastModifiedOn { get; set; }
-        public DateTime? DeletedOn { get; set; }
-        public string? ModifiedOnId { get; set; }
-
-        public DeckDataEntity()
-        {
-            this.Id = Guid.NewGuid().ToString();
-            this.IsActive = true;
-            this.CreatedOn = DateTime.UtcNow;
-        }
 
     }
 }

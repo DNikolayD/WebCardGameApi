@@ -20,7 +20,6 @@ services.AddSingleton(authOptions);
 services.AddControllers();
 services.AddIdentity<UserDataEntity, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")).LogTo(message => File.AppendAllText(Path.Combine(Assembly.GetExecutingAssembly().Location, @"..\..\..\..\logs.txt"), message)));
-services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 services.AddScoped(typeof(IDeletableRepository<>), typeof(DeletableRepository<>));
 services.AddServices();
 services.AddScoped<ApplicationInitializer>();
