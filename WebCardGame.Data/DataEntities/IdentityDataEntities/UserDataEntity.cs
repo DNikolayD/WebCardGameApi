@@ -24,10 +24,16 @@ namespace WebCardGame.Data.DataEntities.IdentityDataEntities
 
         public virtual ICollection<CardDataEntity> CardDataEntities { get; set; }
 
+        public virtual ICollection<DeckDataEntity> CreatedDecks { get; set; }
+
+        public virtual ICollection<DeckDataEntity> OtherDecks { get; set; }
+
         public UserDataEntity()
         {
             ImageDataEntity = new ImageDataEntity();
             CardDataEntities = new List<CardDataEntity>();
+            CreatedDecks = new List<DeckDataEntity>();
+            OtherDecks = new List<DeckDataEntity>();
         }
     }
 }

@@ -43,6 +43,10 @@ namespace WebCardGame.Data
             }
             builder.CardDataEntityConfigurations();
             builder.CardTypeDataEntityConfigurations();
+            builder.DeckDataEntityConfigurations();
+            builder.DeckTypeDataEntityConfigurations();
+            builder.EffectDataEntityConfigurations();
+            builder.EffectTypeDataEntityConfigurations();
             base.OnModelCreating(builder);
         }
     }
