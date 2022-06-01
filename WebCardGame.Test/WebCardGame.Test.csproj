@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <Folder Include="ApiTests\" />
-    <Folder Include="RepositoryTests\DeletableRepositoryTests\" />
     <Folder Include="ServiceTests\" />
   </ItemGroup>
 

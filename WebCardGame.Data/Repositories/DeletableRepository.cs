@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using WebCardGame.Common;
+using WebCardGame.Common.Logger;
 using WebCardGame.Common.Requests;
 using WebCardGame.Data.Requests;
 using WebCardGame.Data.Responses;
@@ -12,11 +14,13 @@ namespace WebCardGame.Data.Repositories
         private readonly AbstractValidator<T> _validator;
         private readonly ApplicationDbContext _context;
         private readonly DbSet<T> _table;
+        private readonly ILogger<DeletableRepository<T>> _logger;
 
-        public DeletableRepository(ApplicationDbContext applicationDbContext, AbstractValidator<T> validation)
+        public DeletableRepository(ApplicationDbContext applicationDbContext, AbstractValidator<T> validation, ILogger<DeletableRepository<T>> logger)
         {
             _validator = validation ?? throw new ArgumentNullException(nameof(validation));
             _context = applicationDbContext ?? throw new ArgumentNullException(nameof(applicationDbContext));
+            _logger = logger;
             this._table = _context.Set<T>();
         }
 
@@ -37,6 +41,7 @@ namespace WebCardGame.Data.Repositories
             {
                 response.Payload = entities;
             }
+            _logger.LogInformation(BaseMessageProvider.GetMessage(response));
             return response;
         }
 
@@ -54,6 +59,7 @@ namespace WebCardGame.Data.Repositories
             {
                 response.Payload = entity;
             }
+            _logger.LogInformation(BaseMessageProvider.GetMessage(response));
             return response;
         }
 
@@ -73,7 +79,7 @@ namespace WebCardGame.Data.Repositories
                 await _table.AddAsync(entity);
                 response.Payload = _table.Contains(entity);
             }
-
+            _logger.LogInformation(BaseMessageProvider.GetMessage(response));
             return response;
         }
 
@@ -94,7 +100,7 @@ namespace WebCardGame.Data.Repositories
                 _context.Entry(entity).State = EntityState.Modified;
                 response.Payload = _table.Contains(entity);
             }
-
+            _logger.LogInformation(BaseMessageProvider.GetMessage(response));
             return response;
         }
 
@@ -106,6 +112,7 @@ namespace WebCardGame.Data.Repositories
             this._table.Remove(entity);
             response.IsSuccess = !_table.Contains(entity);
             response.Payload = !_table.Contains(entity);
+            _logger.LogInformation(BaseMessageProvider.GetMessage(response));
             return response;
         }
 
@@ -115,6 +122,7 @@ namespace WebCardGame.Data.Repositories
             var changes = await _context.SaveChangesAsync();
             response.IsSuccess = changes > 0;
             response.Payload = changes;
+            _logger.LogInformation(BaseMessageProvider.GetMessage(response));
             return response;
         }
 
@@ -130,9 +138,9 @@ namespace WebCardGame.Data.Repositories
             {
                 all = all.FindAll(x => x.GetType().GetProperty(propertyName).GetValue(x) == value);
             }
-
             response.IsSuccess = true;
             response.Payload = all;
+            _logger.LogInformation(BaseMessageProvider.GetMessage(response));
             return response;
         }
     }

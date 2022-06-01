@@ -11,10 +11,13 @@ using WebCardGame.Data.DataEntities.IdentityDataEntities;
 using WebCardGame.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 var services = builder.Services;
 var configuration = builder.Configuration;
 
 var authOptions = configuration.GetSection(nameof(AuthOptions)).Get<AuthOptions>();
+
 services.AddSingleton(authOptions);
 
 services.AddControllers();

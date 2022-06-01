@@ -1,4 +1,6 @@
-﻿using WebCardGame.Common;
+﻿using Microsoft.Extensions.Logging;
+using WebCardGame.Common;
+using WebCardGame.Common.Logger;
 using WebCardGame.Data.DataEntities.CardDataEntities;
 using WebCardGame.Data.Repositories;
 using WebCardGame.Data.Requests;
@@ -16,10 +18,13 @@ namespace WebCardGame.Service.Services
 
         private readonly FullCardDTOValidator _validator;
 
-        public CardService(IDeletableRepository<CardDataEntity> repository, FullCardDTOValidator validator)
+        private readonly ILogger<CardService> _logger;
+
+        public CardService(IDeletableRepository<CardDataEntity> repository, FullCardDTOValidator validator, ILogger<CardService> logger)
         {
             _repository = repository;
             _validator = validator;
+            _logger = logger;
         }
 
         public async Task<BaseDtoResponse> AddAsync(BaseDtoRequest request)
@@ -35,6 +40,7 @@ namespace WebCardGame.Service.Services
             {
                 baseDtoResponse.Payload = validatedPayload;
             }
+            _logger.LogInformation(BaseMessageProvider.GetMessage(baseDtoResponse));
             return baseDtoResponse;
         }
 
@@ -51,6 +57,7 @@ namespace WebCardGame.Service.Services
             {
                 baseDtoResponse.Payload = validatedPayload;
             }
+            _logger.LogInformation(BaseMessageProvider.GetMessage(baseDtoResponse));
             return baseDtoResponse;
         }
 
@@ -65,6 +72,7 @@ namespace WebCardGame.Service.Services
             {
                 baseDtoResponse.Payload = payload;
             }
+            _logger.LogInformation(BaseMessageProvider.GetMessage(baseDtoResponse));
             return baseDtoResponse;
         }
 
@@ -80,7 +88,7 @@ namespace WebCardGame.Service.Services
             {
                 baseDtoResponse.Payload = validatedPayload;
             }
-
+            _logger.LogInformation(BaseMessageProvider.GetMessage(baseDtoResponse));
             return baseDtoResponse;
         }
 
@@ -97,7 +105,7 @@ namespace WebCardGame.Service.Services
             {
                 baseDtoResponse.Payload = validatedPayload;
             }
-
+            _logger.LogInformation(BaseMessageProvider.GetMessage(baseDtoResponse));
             return baseDtoResponse;
         }
 
@@ -114,7 +122,7 @@ namespace WebCardGame.Service.Services
             {
                 baseDtoResponse.Payload = validatedPayload;
             }
-
+            _logger.LogInformation(BaseMessageProvider.GetMessage(baseDtoResponse));
             return baseDtoResponse;
         }
     }
