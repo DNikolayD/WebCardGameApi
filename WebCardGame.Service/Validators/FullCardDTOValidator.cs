@@ -11,11 +11,11 @@ using static WebCardGame.Common.ErrorHandling.StatusCodes;
 
 namespace WebCardGame.Service.Validators
 {
-    public class FullCardDTOValidator : AbstractValidator<FullCardDto>
+    public class FullCardDtoValidator : AbstractValidator<FullCardDto>
     {
         private readonly BaseValidationModel _baseValidationModel;
 
-        public FullCardDTOValidator()
+        public FullCardDtoValidator()
         {
             _baseValidationModel = new BaseValidationModel(CardClassName);
             SetRulesForName();

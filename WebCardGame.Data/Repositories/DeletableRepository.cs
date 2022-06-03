@@ -41,7 +41,7 @@ namespace WebCardGame.Data.Repositories
             {
                 response.Payload = entities;
             }
-            _logger.LogInformation(BaseMessageProvider.GetMessage(response));
+            _logger.LogInformation(MessageProvider.GetMessage(response));
             return response;
         }
 
@@ -59,7 +59,7 @@ namespace WebCardGame.Data.Repositories
             {
                 response.Payload = entity;
             }
-            _logger.LogInformation(BaseMessageProvider.GetMessage(response));
+            _logger.LogInformation(MessageProvider.GetMessage(response));
             return response;
         }
 
@@ -79,7 +79,7 @@ namespace WebCardGame.Data.Repositories
                 await _table.AddAsync(entity);
                 response.Payload = _table.Contains(entity);
             }
-            _logger.LogInformation(BaseMessageProvider.GetMessage(response));
+            _logger.LogInformation(MessageProvider.GetMessage(response));
             return response;
         }
 
@@ -100,7 +100,7 @@ namespace WebCardGame.Data.Repositories
                 _context.Entry(entity).State = EntityState.Modified;
                 response.Payload = _table.Contains(entity);
             }
-            _logger.LogInformation(BaseMessageProvider.GetMessage(response));
+            _logger.LogInformation(MessageProvider.GetMessage(response));
             return response;
         }
 
@@ -112,7 +112,7 @@ namespace WebCardGame.Data.Repositories
             this._table.Remove(entity);
             response.IsSuccess = !_table.Contains(entity);
             response.Payload = !_table.Contains(entity);
-            _logger.LogInformation(BaseMessageProvider.GetMessage(response));
+            _logger.LogInformation(MessageProvider.GetMessage(response));
             return response;
         }
 
@@ -122,7 +122,7 @@ namespace WebCardGame.Data.Repositories
             var changes = await _context.SaveChangesAsync();
             response.IsSuccess = changes > 0;
             response.Payload = changes;
-            _logger.LogInformation(BaseMessageProvider.GetMessage(response));
+            _logger.LogInformation(MessageProvider.GetMessage(response));
             return response;
         }
 
@@ -140,7 +140,7 @@ namespace WebCardGame.Data.Repositories
             }
             response.IsSuccess = true;
             response.Payload = all;
-            _logger.LogInformation(BaseMessageProvider.GetMessage(response));
+            _logger.LogInformation(MessageProvider.GetMessage(response));
             return response;
         }
     }
