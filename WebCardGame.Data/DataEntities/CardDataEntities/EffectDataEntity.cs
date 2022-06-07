@@ -1,6 +1,5 @@
 ﻿using WebCardGame.Data.DataEntities.Base;
 
-
 namespace WebCardGame.Data.DataEntities.CardDataEntities
 {
     public class EffectDataEntity : DataEntityWithStringKey

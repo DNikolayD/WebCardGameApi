@@ -14,7 +14,7 @@ namespace WebCardGame.Data.DataEntities.Base
 
         protected DataEntityWithStringKey()
         {
-            this.Id = Guid.NewGuid().ToString();
+            Id = Guid.NewGuid().ToString();
             IsActive = true;
             IsModified = false;
             CreatedOn = DateTime.UtcNow;

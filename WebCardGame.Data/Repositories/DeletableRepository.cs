@@ -21,7 +21,7 @@ namespace WebCardGame.Data.Repositories
             _validator = validation ?? throw new ArgumentNullException(nameof(validation));
             _context = applicationDbContext ?? throw new ArgumentNullException(nameof(applicationDbContext));
             _logger = logger;
-            this._table = _context.Set<T>();
+            _table = _context.Set<T>();
         }
 
 
@@ -41,7 +41,7 @@ namespace WebCardGame.Data.Repositories
             {
                 response.Payload = entities;
             }
-            _logger.LogInformation(MessageProvider.GetMessage(response));
+            _logger.LogInformation(response.GetMessage());
             return response;
         }
 
@@ -59,7 +59,7 @@ namespace WebCardGame.Data.Repositories
             {
                 response.Payload = entity;
             }
-            _logger.LogInformation(MessageProvider.GetMessage(response));
+            _logger.LogInformation(response.GetMessage());
             return response;
         }
 
@@ -79,7 +79,7 @@ namespace WebCardGame.Data.Repositories
                 await _table.AddAsync(entity);
                 response.Payload = _table.Contains(entity);
             }
-            _logger.LogInformation(MessageProvider.GetMessage(response));
+            _logger.LogInformation(response.GetMessage());
             return response;
         }
 
@@ -100,19 +100,19 @@ namespace WebCardGame.Data.Repositories
                 _context.Entry(entity).State = EntityState.Modified;
                 response.Payload = _table.Contains(entity);
             }
-            _logger.LogInformation(MessageProvider.GetMessage(response));
+            _logger.LogInformation(response.GetMessage());
             return response;
         }
 
         public async Task<BaseDataResponse> DeleteAsync(BaseDataRequest request)
         {
             var response = new BaseDataResponse();
-            var entity = (T)(await this.GetByIdAsync(request)).Payload;
+            var entity = (T)(await GetByIdAsync(request)).Payload;
             entity.GetType().GetProperties().Where(p => p.CanWrite && p.CanRead && p.Name.EndsWith("Id") && p.Name != "Id").ToList().ForEach(p => p.SetValue(p, null));
-            this._table.Remove(entity);
+            _table.Remove(entity);
             response.IsSuccess = !_table.Contains(entity);
             response.Payload = !_table.Contains(entity);
-            _logger.LogInformation(MessageProvider.GetMessage(response));
+            _logger.LogInformation(response.GetMessage());
             return response;
         }
 
@@ -122,7 +122,7 @@ namespace WebCardGame.Data.Repositories
             var changes = await _context.SaveChangesAsync();
             response.IsSuccess = changes > 0;
             response.Payload = changes;
-            _logger.LogInformation(MessageProvider.GetMessage(response));
+            _logger.LogInformation(response.GetMessage());
             return response;
         }
 
@@ -133,14 +133,14 @@ namespace WebCardGame.Data.Repositories
             var filter = (FilteringObject)payload;
             var propertyName = filter.PropertyName;
             var value = filter.Value;
-            var all = (await this.GetAllAsync()).Payload as List<T>;
+            var all = (await GetAllAsync()).Payload as List<T>;
             if (all.Exists(x => x.GetType().GetProperty(propertyName) != null) && all.Exists(x => x.GetType().GetProperty(propertyName).GetType() == value.GetType()))
             {
                 all = all.FindAll(x => x.GetType().GetProperty(propertyName).GetValue(x) == value);
             }
             response.IsSuccess = true;
             response.Payload = all;
-            _logger.LogInformation(MessageProvider.GetMessage(response));
+            _logger.LogInformation(response.GetMessage());
             return response;
         }
     }

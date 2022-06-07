@@ -37,7 +37,7 @@ public class CardService : ICardService
         baseDtoResponse.Errors = validatedPayload.Errors.Select(e => e.ErrorMessage + e.ErrorCode).ToList();
         baseDtoResponse.IsSuccess = !baseDtoResponse.Errors.Any();
         baseDtoResponse.Payload = baseDtoResponse.IsSuccess ? validatedPayload : new object();
-        _logger.LogInformation(MessageProvider.GetMessage(baseDtoResponse));
+        _logger.LogInformation(baseDtoResponse.GetMessage());
         return baseDtoResponse;
     }
 
@@ -51,7 +51,7 @@ public class CardService : ICardService
         baseDtoResponse.Errors = validatedPayload.Errors.Select(e => e.ErrorMessage + e.ErrorCode).ToList();
         baseDtoResponse.IsSuccess = !baseDtoResponse.Errors.Any();
         baseDtoResponse.Payload = baseDtoResponse.IsSuccess ? validatedPayload : new object();
-        _logger.LogInformation(MessageProvider.GetMessage(baseDtoResponse));
+        _logger.LogInformation(baseDtoResponse.GetMessage());
         return baseDtoResponse;
     }
 
@@ -63,7 +63,7 @@ public class CardService : ICardService
         await _repository.SaveAsync();
         baseDtoResponse.IsSuccess = (await _repository.GetAllAsync()).IsSuccess;
         baseDtoResponse.Payload = baseDtoResponse.IsSuccess ? payload : new object();
-        _logger.LogInformation(MessageProvider.GetMessage(baseDtoResponse));
+        _logger.LogInformation(baseDtoResponse.GetMessage());
         return baseDtoResponse;
     }
 
@@ -76,7 +76,7 @@ public class CardService : ICardService
         baseDtoResponse.Errors = validatedPayload.Errors.Select(e => e.ErrorMessage + e.ErrorCode).ToList();
         baseDtoResponse.IsSuccess = !baseDtoResponse.Errors.Any();
         baseDtoResponse.Payload = baseDtoResponse.IsSuccess ? validatedPayload : new object();
-        _logger.LogInformation(MessageProvider.GetMessage(baseDtoResponse));
+        _logger.LogInformation(baseDtoResponse.GetMessage());
         return baseDtoResponse;
     }
 
@@ -90,7 +90,7 @@ public class CardService : ICardService
             (List<string>)validatedPayload.Select(vp => vp.Errors.Select(e => e.ErrorMessage + e.ErrorCode));
         baseDtoResponse.IsSuccess = !baseDtoResponse.Errors.Any();
         baseDtoResponse.Payload = baseDtoResponse.IsSuccess ? validatedPayload : new object();
-        _logger.LogInformation(MessageProvider.GetMessage(baseDtoResponse));
+        _logger.LogInformation(baseDtoResponse.GetMessage());
         return baseDtoResponse;
     }
 
@@ -104,7 +104,7 @@ public class CardService : ICardService
             (List<string>)validatedPayload.Select(vp => vp.Errors.Select(e => e.ErrorMessage + e.ErrorCode));
         baseDtoResponse.IsSuccess = !baseDtoResponse.Errors.Any();
         baseDtoResponse.Payload = baseDtoResponse.IsSuccess ? validatedPayload : new object();
-        _logger.LogInformation(MessageProvider.GetMessage(baseDtoResponse));
+        _logger.LogInformation(baseDtoResponse.GetMessage());
         return baseDtoResponse;
     }
 }

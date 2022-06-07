@@ -1,9 +1,9 @@
+using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
 using WebCardGame.Api.Extensions;
 using WebCardGame.Common.Configuration;
 using WebCardGame.Data;

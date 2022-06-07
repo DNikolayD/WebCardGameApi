@@ -15,26 +15,19 @@ namespace WebCardGame.Common.ErrorHandling
             var value = baseValidationModel.Value;
 
             var origin = originClass + " " + originProperty;
-            switch (errorType)
+            _errorMessage = errorType switch
             {
-                case ErrorType.Empty:
-                    _errorMessage = origin + " is required!";
-                    break;
-                case ErrorType.TooShort:
-                    _errorMessage = origin + " must be no shorter than " + value + " symbols! Please choose another " + originProperty + "!";
-                    break;
-                case ErrorType.TooLong:
-                    _errorMessage = origin + " must be no longer than " + value + " symbols! Please choose another " + originProperty + "!";
-                    break;
-                case ErrorType.TooBig:
-                    _errorMessage = origin + " must be no bigger than " + value + " symbols! Please choose another " + originProperty + "!";
-                    break;
-                case ErrorType.TooSmall:
-                    _errorMessage = origin + " must be no shorter than " + value + " symbols! Please choose another " + originProperty + "!";
-                    break;
-                default:
-                    break;
-            }
+                ErrorType.Empty => origin + " is required!",
+                ErrorType.TooShort => origin + " must be no shorter than " + value +
+                                      " symbols! Please choose another " + originProperty + "!",
+                ErrorType.TooLong => origin + " must be no longer than " + value + " symbols! Please choose another " +
+                                     originProperty + "!",
+                ErrorType.TooBig => origin + " must be no bigger than " + value + " symbols! Please choose another " +
+                                    originProperty + "!",
+                ErrorType.TooSmall => origin + " must be no shorter than " + value +
+                                      " symbols! Please choose another " + originProperty + "!",
+                _ => throw new ArgumentOutOfRangeException()
+            };
             return _errorMessage;
         }
     }

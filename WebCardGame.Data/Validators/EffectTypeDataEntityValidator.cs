@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using WebCardGame.Common.ValidationModels;
 using WebCardGame.Common;
 using WebCardGame.Common.Extensions;
+using WebCardGame.Common.ValidationModels;
 using WebCardGame.Data.DataEntities.CardDataEntities;
 using static WebCardGame.Common.Checkers.ClassNames;
 using static WebCardGame.Common.Checkers.PropertyNames;
