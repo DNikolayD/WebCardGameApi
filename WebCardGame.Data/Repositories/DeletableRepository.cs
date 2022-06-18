@@ -27,7 +27,10 @@ namespace WebCardGame.Data.Repositories
 
         public async Task<BaseDataResponse> GetAllAsync()
         {
-            var response = new BaseDataResponse();
+            var response = new BaseDataResponse()
+            {
+                Origin = "DeletableRepository, GetAllAsync"
+            };
             var entities = await _table.ToListAsync();
             foreach (var result in entities.Select(entity => _validator.Validate(entity)))
             {

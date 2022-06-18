@@ -12,7 +12,7 @@
 
         public object Payload { get; set; }
 
-        public BaseResponse()
+        protected BaseResponse()
         {
             CreatedOn = DateTime.UtcNow;
             Errors = new List<string>();
