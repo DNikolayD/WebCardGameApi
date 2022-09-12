@@ -46,7 +46,7 @@ public class CardService : ICardService
         await _repository.SaveAsync();
         _validator.Validate(payload);
         baseDtoResponse.Errors = _validator.Errors;
-        baseDtoResponse.IsSuccessful = !baseDtoResponse.Errors.Any();
+        baseDtoResponse.IsSuccessful = baseDtoResponse.Errors.All(x => x == null);
         baseDtoResponse.Payload = baseDtoResponse.IsSuccessful ? payload : new object();
         _logger.LogInformation(baseDtoResponse.GetMessage());
         return baseDtoResponse;

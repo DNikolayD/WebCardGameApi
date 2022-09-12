@@ -56,22 +56,22 @@ namespace WebCardGame.Common
 
         private void SetRulesForDescription()
         {
-            var property = _entity.GetType().GetProperty(DescriptionPropertyName).GetValue(_entity);
+            var property = _entity.GetType().GetProperty("Description").GetValue(_entity);
             _baseValidationModel.OriginProperty = DescriptionPropertyName;
             _baseValidationModel.ErrorCode = BadRequest;
             _baseValidationModel.SetNotNullRule(property);
             Errors.Add(_baseValidationModel.ErrorMessage);
-            _baseValidationModel.Value = MinNameLength;
+            _baseValidationModel.Value = MinDescriptionLength;
             _baseValidationModel.SetTooShortRule(property);
             Errors.Add(_baseValidationModel.ErrorMessage);
-            _baseValidationModel.Value = MaxNameLength;
+            _baseValidationModel.Value = MaxDescriptionLength;
             _baseValidationModel.SetTooLongRule(property);
             Errors.Add(_baseValidationModel.ErrorMessage);
         }
 
         private void SetRulesForImageId()
         {
-            var property = _entity.GetType().GetProperty(ImagePropertyName).GetValue(_entity);
+            var property = _entity.GetType().GetProperty("ImageId").GetValue(_entity);
             _baseValidationModel.OriginProperty = ImagePropertyName;
             _baseValidationModel.ErrorCode = BadRequest;
             _baseValidationModel.SetNotNullRule(property);
@@ -80,7 +80,7 @@ namespace WebCardGame.Common
 
         private void SetRulesForTypeId()
         {
-            var property = _entity.GetType().GetProperty(ImagePropertyName).GetValue(_entity);
+            var property = _entity.GetType().GetProperty("TypeId").GetValue(_entity);
             _baseValidationModel.OriginProperty = TypePropertyName;
             _baseValidationModel.ErrorCode = BadRequest;
             _baseValidationModel.SetNotNullRule(property);
@@ -89,7 +89,7 @@ namespace WebCardGame.Common
 
         private void SetRulesForEffects()
         {
-            var property = _entity.GetType().GetProperty(ImagePropertyName).GetValue(_entity);
+            var property = _entity.GetType().GetProperty("EffectIds").GetValue(_entity);
             _baseValidationModel.OriginProperty = EffectPropertyName;
             _baseValidationModel.ErrorCode = BadRequest;
             _baseValidationModel.SetNotNullRule(property);
@@ -98,7 +98,7 @@ namespace WebCardGame.Common
 
         private void SetRulesForCost()
         {
-            var property = _entity.GetType().GetProperty(NamePropertyName).GetValue(_entity);
+            var property = _entity.GetType().GetProperty("Cost").GetValue(_entity);
             _baseValidationModel.OriginProperty = CostPropertyName;
             _baseValidationModel.ErrorCode = BadRequest;
             _baseValidationModel.SetNotNullRule(property);
@@ -113,7 +113,7 @@ namespace WebCardGame.Common
 
         private void SetRulesForCreatorId()
         {            
-            var property = _entity.GetType().GetProperty(NamePropertyName).GetValue(_entity);
+            var property = _entity.GetType().GetProperty("CreatorId").GetValue(_entity);
             _baseValidationModel.OriginProperty = CreatorPropertyName;
             _baseValidationModel.ErrorCode = BadRequest;
             _baseValidationModel.SetNotNullRule(property);
