@@ -19,17 +19,17 @@ namespace WebCardGame.Test.RepositoryTests.DeletableRepositoryTests
     {/*
         private Mock<ApplicationDbContext> _context;
         private AbstractValidator<object> _validator;
-        private IDeletableRepository<object> _deletableRepository;
+        private IRepository<object> _deletableRepository;
 
         [SetUp]
         public void Setup()
         {
             _context = new Mock<ApplicationDbContext>();
             _validator = new InlineValidator<object>();
-            _deletableRepository = new DeletableRepository<object>(
+            _deletableRepository = new Repository<object>(
                 _context.Object,
                 _validator,
-                new NullLogger<DeletableRepository<object>>()
+                new NullLogger<Repository<object>>()
             );
         }
 
@@ -40,8 +40,8 @@ namespace WebCardGame.Test.RepositoryTests.DeletableRepositoryTests
             _context.Setup(x => x.Set<object>()).Returns(table as DbSet<object>);
             _validator.RuleFor(x => x.GetType());
             var result = await _deletableRepository.GetAllAsync();
-            Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual("This response was created on 16 from DeletableRepository, GetAllAsync. The response contains no errors and it has payload of type object", result.GetMessage());
+            Assert.IsTrue(result.IsSuccessful);
+            Assert.AreEqual("This response was created on 16 from Repository, GetAllAsync. The response contains no errors and it has payload of type object", result.GetMessage());
         }
         */
     }

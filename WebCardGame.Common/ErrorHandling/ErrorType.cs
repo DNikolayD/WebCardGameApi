@@ -7,5 +7,7 @@
         TooLong = 2,
         TooBig = 3,
         TooSmall = 4,
+        WrongOrigin = 5,
+        WrongType = 6,
     }
 }

@@ -2,7 +2,7 @@
 
 namespace WebCardGame.Data.DataEntities.Base
 {
-    public class ImageDataEntity : DataEntityWithStringKey
+    public class ImageDataEntity : DataEntityWithIntKey
     {
         public string ImagePath { get; set; }
 

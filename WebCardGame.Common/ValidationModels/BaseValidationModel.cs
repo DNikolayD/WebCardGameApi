@@ -4,7 +4,7 @@ namespace WebCardGame.Common.ValidationModels
 {
     public class BaseValidationModel
     {
-        public ErrorType ErrorType { get; set; }
+        public ErrorType? ErrorType { get; set; }
 
         public string OriginClass { get; set; }
 
@@ -12,14 +12,18 @@ namespace WebCardGame.Common.ValidationModels
 
         public int Value { get; set; }
 
-        public string ErrorMessage { get; }
+        public string ErrorMessage { get; set; }
 
         public string ErrorCode { get; set; }
 
+        public string? CalledFrom { get; set; }
+
+        public string? TypeOfCall { get; set; }
+
         public BaseValidationModel(string originClass)
         {
-            OriginProperty = originClass;
-            ErrorMessage = this.ConstructErrorMessage();
+            ErrorType = null;
+            OriginClass = originClass;
         }
     }
 }

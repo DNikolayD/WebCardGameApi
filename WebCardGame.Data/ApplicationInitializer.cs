@@ -12,9 +12,9 @@ namespace WebCardGame.Data
         private readonly ApplicationDbContext _context;
         private readonly UserManager<UserDataEntity> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IDeletableRepository<DeckTypeDataEntity> _deckTypeRepository;
+        private readonly IRepository<DeckTypeDataEntity> _deckTypeRepository;
 
-        public ApplicationInitializer(ApplicationDbContext context, UserManager<UserDataEntity> userManager, RoleManager<IdentityRole> roleManager, IDeletableRepository<DeckTypeDataEntity> deckTypeRepository)
+        public ApplicationInitializer(ApplicationDbContext context, UserManager<UserDataEntity> userManager, RoleManager<IdentityRole> roleManager, IRepository<DeckTypeDataEntity> deckTypeRepository)
         {
             _context = context;
             _roleManager = roleManager;

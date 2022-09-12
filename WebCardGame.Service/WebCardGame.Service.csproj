@@ -10,4 +10,8 @@
     <ProjectReference Include="..\WebCardGame.Data\WebCardGame.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validators\" />
+  </ItemGroup>
+
 </Project>

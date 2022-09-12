@@ -1,6 +1,6 @@
 ﻿namespace WebCardGame.Data.DataEntities.Base
 {
-    public interface IDeletableDataEntity<TKey> : IDataEntity
+    public interface IBaseDataEntity<TKey> : IDataEntity
     {
         public TKey Id { get; set; }
 

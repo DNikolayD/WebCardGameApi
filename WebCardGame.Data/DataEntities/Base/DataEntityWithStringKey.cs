@@ -2,7 +2,7 @@
 
 namespace WebCardGame.Data.DataEntities.Base
 {
-    public abstract class DataEntityWithStringKey : IDeletableDataEntity<string>
+    public abstract class DataEntityWithStringKey : IBaseDataEntity<string>
     {
         [Key]
         public string Id { get; set; }

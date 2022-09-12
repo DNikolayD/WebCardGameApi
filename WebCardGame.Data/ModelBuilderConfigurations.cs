@@ -9,15 +9,15 @@ namespace WebCardGame.Data
 
         public static void SetKeys(this ModelBuilder modelBuilder, Type type)
         {
-            if (type.IsEquivalentTo(typeof(IDeletableDataEntity<string>)))
+            if (type.IsEquivalentTo(typeof(IBaseDataEntity<string>)))
             {
-                var entity = modelBuilder.Entity<IDeletableDataEntity<string>>();
+                var entity = modelBuilder.Entity<IBaseDataEntity<string>>();
 
                 entity.HasKey(e => e.Id);
             }
             else
             {
-                var entity = modelBuilder.Entity<IDeletableDataEntity<int>>();
+                var entity = modelBuilder.Entity<IBaseDataEntity<int>>();
 
                 entity.HasKey(e => e.Id);
             }

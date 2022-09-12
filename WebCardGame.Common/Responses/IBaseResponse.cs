@@ -6,7 +6,7 @@
 
         public string Origin { get; set; }
 
-        public bool IsSuccess { get; set; }
+        public bool IsSuccessful { get; set; }
 
         public List<string> Errors { get; set; }
 

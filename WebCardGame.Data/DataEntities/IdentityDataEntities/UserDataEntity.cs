@@ -4,7 +4,7 @@ using WebCardGame.Data.DataEntities.CardDataEntities;
 
 namespace WebCardGame.Data.DataEntities.IdentityDataEntities
 {
-    public class UserDataEntity : IdentityUser, IDeletableDataEntity<string>
+    public class UserDataEntity : IdentityUser, IBaseDataEntity<string>
     {
         public bool IsActive { get; set; }
 

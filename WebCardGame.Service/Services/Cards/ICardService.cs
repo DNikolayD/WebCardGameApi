@@ -17,4 +17,6 @@ public interface ICardService : IService
     public Task<BaseDtoResponse> GetAllAsync(BaseDtoRequest request);
 
     public Task<BaseDtoResponse> GetAllByFilter(BaseDtoRequest request);
+
+    public Task<BaseDtoResponse> SortAllAsync(BaseDtoRequest request);
 }

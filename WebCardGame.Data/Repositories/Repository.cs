@@ -9,14 +9,14 @@ using WebCardGame.Data.Responses;
 
 namespace WebCardGame.Data.Repositories
 {
-    public class DeletableRepository<T> : IDeletableRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
         private readonly AbstractValidator<T> _validator;
         private readonly ApplicationDbContext _context;
         private readonly DbSet<T> _table;
-        private readonly ILogger<DeletableRepository<T>> _logger;
+        private readonly ILogger<Repository<T>> _logger;
 
-        public DeletableRepository(ApplicationDbContext applicationDbContext, AbstractValidator<T> validation, ILogger<DeletableRepository<T>> logger)
+        public Repository(ApplicationDbContext applicationDbContext, AbstractValidator<T> validation, ILogger<Repository<T>> logger)
         {
             _validator = validation ?? throw new ArgumentNullException(nameof(validation));
             _context = applicationDbContext ?? throw new ArgumentNullException(nameof(applicationDbContext));
@@ -29,7 +29,7 @@ namespace WebCardGame.Data.Repositories
         {
             var response = new BaseDataResponse()
             {
-                Origin = "DeletableRepository, GetAllAsync"
+                Origin = "Repository, GetAllAsync"
             };
             var entities = await _table.ToListAsync();
             foreach (var result in entities.Select(entity => _validator.Validate(entity)))
@@ -39,8 +39,8 @@ namespace WebCardGame.Data.Repositories
                     response.Errors.Add(error);
                 }
             }
-            response.IsSuccess = !response.Errors.Any();
-            if (response.IsSuccess)
+            response.IsSuccessful = !response.Errors.Any();
+            if (response.IsSuccessful)
             {
                 response.Payload = entities;
             }
@@ -57,8 +57,8 @@ namespace WebCardGame.Data.Repositories
             {
                 response.Errors.Add(error);
             }
-            response.IsSuccess = !response.Errors.Any();
-            if (response.IsSuccess)
+            response.IsSuccessful = !response.Errors.Any();
+            if (response.IsSuccessful)
             {
                 response.Payload = entity;
             }
@@ -76,8 +76,8 @@ namespace WebCardGame.Data.Repositories
                 response.Errors.Add(error);
             }
 
-            response.IsSuccess = !response.Errors.Any();
-            if (response.IsSuccess)
+            response.IsSuccessful = !response.Errors.Any();
+            if (response.IsSuccessful)
             {
                 await _table.AddAsync(entity);
                 response.Payload = _table.Contains(entity);
@@ -96,8 +96,8 @@ namespace WebCardGame.Data.Repositories
                 response.Errors.Add(error);
             }
 
-            response.IsSuccess = !response.Errors.Any();
-            if (response.IsSuccess)
+            response.IsSuccessful = !response.Errors.Any();
+            if (response.IsSuccessful)
             {
                 _table.Attach(entity);
                 _context.Entry(entity).State = EntityState.Modified;
@@ -113,7 +113,7 @@ namespace WebCardGame.Data.Repositories
             var entity = (T)(await GetByIdAsync(request)).Payload;
             entity.GetType().GetProperties().Where(p => p.CanWrite && p.CanRead && p.Name.EndsWith("Id") && p.Name != "Id").ToList().ForEach(p => p.SetValue(p, null));
             _table.Remove(entity);
-            response.IsSuccess = !_table.Contains(entity);
+            response.IsSuccessful = !_table.Contains(entity);
             response.Payload = !_table.Contains(entity);
             _logger.LogInformation(response.GetMessage());
             return response;
@@ -123,7 +123,7 @@ namespace WebCardGame.Data.Repositories
         {
             var response = new BaseDataResponse();
             var changes = await _context.SaveChangesAsync();
-            response.IsSuccess = changes > 0;
+            response.IsSuccessful = changes > 0;
             response.Payload = changes;
             _logger.LogInformation(response.GetMessage());
             return response;
@@ -141,7 +141,7 @@ namespace WebCardGame.Data.Repositories
             {
                 all = all.FindAll(x => x.GetType().GetProperty(propertyName).GetValue(x) == value);
             }
-            response.IsSuccess = true;
+            response.IsSuccessful = true;
             response.Payload = all;
             _logger.LogInformation(response.GetMessage());
             return response;

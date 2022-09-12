@@ -1,63 +1,77 @@
-﻿using FluentValidation;
-using WebCardGame.Common.ErrorHandling;
+﻿using WebCardGame.Common.ErrorHandling;
 using WebCardGame.Common.ValidationModels;
 
 namespace WebCardGame.Common.Extensions
 {
-    public static class RuleBuilderExtensions
+    public static class ValidationModelExtension
     {
         public static void SetNotNullRule(
-            this IRuleBuilder<IBaseEntity, object> rulePointer, BaseValidationModel baseValidationModel)
+            this BaseValidationModel baseValidationModel, object obj)
         {
+            if (obj.BeNotNull())
+            {
+                return;
+            }
+
             baseValidationModel.ErrorType = ErrorType.Empty;
-            var errorMessage = baseValidationModel.ErrorMessage;
-            var errorCode = baseValidationModel.ErrorCode;
-            var rule = rulePointer.Must(obj => obj.BeNotNull());
-            rule.WithMessage(errorMessage).WithErrorCode(errorCode);
+            baseValidationModel.ErrorCode = "402 Invalid input";
+            baseValidationModel.ErrorMessage = baseValidationModel.ConstructErrorMessage();
         }
 
         public static void SetTooShortRule(
-            this IRuleBuilder<IBaseEntity, object> rulePointer, BaseValidationModel baseValidationModel)
+            this BaseValidationModel baseValidationModel, object obj)
         {
+            var value = baseValidationModel.Value;
+            if (obj.BeNoShorter(value))
+            {
+                return;
+            }
+
             baseValidationModel.ErrorType = ErrorType.TooShort;
-            var length = baseValidationModel.Value;
-            var errorMessage = baseValidationModel.ErrorMessage;
-            var errorCode = baseValidationModel.ErrorCode;
-            var rule = rulePointer.Must(obj => obj.BeNoShorter(length));
-            rule.WithMessage(errorMessage).WithErrorCode(errorCode);
+            baseValidationModel.ErrorCode = "402 Invalid input";
+            baseValidationModel.ErrorMessage = baseValidationModel.ConstructErrorMessage();
         }
 
         public static void SetTooLongRule(
-            this IRuleBuilder<IBaseEntity, object> rulePointer, BaseValidationModel baseValidationModel)
+            this BaseValidationModel baseValidationModel, object obj)
         {
+            var value = baseValidationModel.Value;
+            if (obj.BeNoLonger(value))
+            {
+                return;
+            }
+
             baseValidationModel.ErrorType = ErrorType.TooLong;
-            var length = baseValidationModel.Value;
-            var errorMessage = baseValidationModel.ErrorMessage;
-            var errorCode = baseValidationModel.ErrorCode;
-            var rule = rulePointer.Must(obj => obj.BeNoLonger(length));
-            rule.WithMessage(errorMessage).WithErrorCode(errorCode);
+            baseValidationModel.ErrorCode = "402 Invalid input";
+            baseValidationModel.ErrorMessage = baseValidationModel.ConstructErrorMessage();
         }
 
         public static void SetTooSmallRule(
-            this IRuleBuilder<IBaseEntity, object> rulePointer, BaseValidationModel baseValidationModel)
+            this BaseValidationModel baseValidationModel, object obj)
         {
-            baseValidationModel.ErrorType = ErrorType.TooSmall;
             var value = baseValidationModel.Value;
-            var errorMessage = baseValidationModel.ErrorMessage;
-            var errorCode = baseValidationModel.ErrorCode;
-            var rule = rulePointer.Must(obj => obj.BeNoSmaller(value));
-            rule.WithMessage(errorMessage).WithErrorCode(errorCode);
+            if (obj.BeNoSmaller(value))
+            {
+                return;
+            }
+
+            baseValidationModel.ErrorType = ErrorType.TooSmall;
+            baseValidationModel.ErrorCode = "402 Invalid input";
+            baseValidationModel.ErrorMessage = baseValidationModel.ConstructErrorMessage();
         }
 
         public static void SetTooBigRule(
-            this IRuleBuilder<IBaseEntity, object> rulePointer, BaseValidationModel baseValidationModel)
+            this BaseValidationModel baseValidationModel, object obj)
         {
-            baseValidationModel.ErrorType = ErrorType.TooBig;
             var value = baseValidationModel.Value;
-            var errorMessage = baseValidationModel.ErrorMessage;
-            var errorCode = baseValidationModel.ErrorCode;
-            var rule = rulePointer.Must(obj => obj.BeNoBigger(value));
-            rule.WithMessage(errorMessage).WithErrorCode(errorCode);
+            if (obj.BeNoBigger(value))
+            {
+                return;
+            }
+
+            baseValidationModel.ErrorType = ErrorType.TooBig;
+            baseValidationModel.ErrorCode = "402 Invalid input";
+            baseValidationModel.ErrorMessage = baseValidationModel.ConstructErrorMessage();
         }
     }
 }

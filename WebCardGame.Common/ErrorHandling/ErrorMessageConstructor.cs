@@ -26,6 +26,8 @@ namespace WebCardGame.Common.ErrorHandling
                                     originProperty + "!",
                 ErrorType.TooSmall => origin + " must be no shorter than " + value +
                                       " symbols! Please choose another " + originProperty + "!",
+                ErrorType.WrongOrigin => baseValidationModel.CalledFrom + " is not a valid origin for" + origin,
+                ErrorType.WrongType => baseValidationModel.TypeOfCall + "is not a valid call type for" + origin,
                 _ => throw new ArgumentOutOfRangeException()
             };
             return _errorMessage;

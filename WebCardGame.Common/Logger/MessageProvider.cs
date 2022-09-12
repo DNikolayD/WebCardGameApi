@@ -7,7 +7,7 @@ namespace WebCardGame.Common.Logger
         public static string GetMessage(this IBaseResponse response)
         {
             var firstPartOfMessage = $"This response was created on {response.CreatedOn.Day} from {response.Origin}.";
-            var secondPartOfMessage = response.IsSuccess ? response.GetSuccessMessage() : response.GetErrorMessage();
+            var secondPartOfMessage = response.IsSuccessful ? response.GetSuccessMessage() : response.GetErrorMessage();
             var message = string.Concat(firstPartOfMessage, secondPartOfMessage);
             return message;
         }
