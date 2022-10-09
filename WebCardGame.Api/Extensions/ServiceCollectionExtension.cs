@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using WebCardGame.Data.DataEntities.IdentityDataEntities;
 using WebCardGame.Data;
@@ -22,7 +21,7 @@ namespace WebCardGame.Api.Extensions
             services.AddControllers();
             services.AddCustomIdentity();
             services.AddCustomDb(configuration);
-            services.AddDataEntityValidators();
+            //services.AddDataEntityValidators();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddServices();
             services.AddScoped<ApplicationInitializer>();
@@ -63,7 +62,7 @@ namespace WebCardGame.Api.Extensions
             }
         }
 
-        private static void AddDataEntityValidators(this IServiceCollection services)
+/*        private static void AddDataEntityValidators(this IServiceCollection services)
         {
             var validatorType = typeof(AbstractValidator<>);
             var types = validatorType.Assembly.GetExportedTypes().Where(x => x.IsClass && !x.IsAbstract);
@@ -71,7 +70,7 @@ namespace WebCardGame.Api.Extensions
             {
                 services.AddTransient(validatorType, type);
             }
-        }
+        }*/
 
         private static void AddCustomIdentity(this IServiceCollection services)
         {

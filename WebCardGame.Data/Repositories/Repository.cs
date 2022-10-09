@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using WebCardGame.Common;
 using WebCardGame.Common.Logger;
 using WebCardGame.Common.Requests;
+using WebCardGame.Common.ValidationModels;
 using WebCardGame.Data.Requests;
 using WebCardGame.Data.Responses;
 
@@ -11,14 +12,15 @@ namespace WebCardGame.Data.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly AbstractValidator<T> _validator;
+        private readonly BaseValidator _validator;
         private readonly ApplicationDbContext _context;
         private readonly DbSet<T> _table;
         private readonly ILogger<Repository<T>> _logger;
 
-        public Repository(ApplicationDbContext applicationDbContext, AbstractValidator<T> validation, ILogger<Repository<T>> logger)
+        public Repository(ApplicationDbContext applicationDbContext, ILogger<Repository<T>> logger)
         {
-            _validator = validation ?? throw new ArgumentNullException(nameof(validation));
+            var baseValidationModel = new BaseValidationModel($"Repository for {typeof(T).Name}");
+            _validator = new BaseValidator(baseValidationModel);
             _context = applicationDbContext ?? throw new ArgumentNullException(nameof(applicationDbContext));
             _logger = logger;
             _table = _context.Set<T>();
@@ -32,13 +34,17 @@ namespace WebCardGame.Data.Repositories
                 Origin = "Repository, GetAllAsync"
             };
             var entities = await _table.ToListAsync();
-            foreach (var result in entities.Select(entity => _validator.Validate(entity)))
+            foreach (var entity in entities)
             {
-                foreach (var error in result.Errors.Select(x => x.ErrorMessage + x.ErrorCode))
+                var validEntities = new List<T>();
+                _validator.Validate(entity);
+                if (_validator.Errors.Any())
                 {
-                    response.Errors.Add(error);
+                    response.Payload = String.Empty;
+                    response.Errors.AddRange(_validator.Errors);
                 }
             }
+
             response.IsSuccessful = !response.Errors.Any();
             if (response.IsSuccessful)
             {
@@ -52,10 +58,10 @@ namespace WebCardGame.Data.Repositories
         {
             var response = new BaseDataResponse();
             var entity = await _table.FindAsync(request.Payload);
-            var validationResult = await _validator.ValidateAsync(entity);
-            foreach (var error in validationResult.Errors.Select(x => x.ErrorMessage + x.ErrorCode))
+            _validator.Validate(entity);
+            if (_validator.Errors.Any())
             {
-                response.Errors.Add(error);
+                response.Errors.AddRange(_validator.Errors);
             }
             response.IsSuccessful = !response.Errors.Any();
             if (response.IsSuccessful)
@@ -70,10 +76,10 @@ namespace WebCardGame.Data.Repositories
         {
             var response = new BaseDataResponse();
             var entity = (T)request.Payload.MapTo(typeof(T));
-            var validationResult = await _validator.ValidateAsync(entity);
-            foreach (var error in validationResult.Errors.Select(x => x.ErrorMessage + x.ErrorCode))
+            _validator.Validate(entity);
+            if (_validator.Errors.Any())
             {
-                response.Errors.Add(error);
+                response.Errors.AddRange(_validator.Errors);
             }
 
             response.IsSuccessful = !response.Errors.Any();
@@ -90,10 +96,10 @@ namespace WebCardGame.Data.Repositories
         {
             var response = new BaseDataResponse();
             var entity = (T)request.Payload.MapTo(typeof(T));
-            var validationResult = await _validator.ValidateAsync(entity);
-            foreach (var error in validationResult.Errors.Select(x => x.ErrorMessage + x.ErrorCode))
+            _validator.Validate(entity);
+            if (_validator.Errors.Any())
             {
-                response.Errors.Add(error);
+                response.Errors.AddRange(_validator.Errors);
             }
 
             response.IsSuccessful = !response.Errors.Any();

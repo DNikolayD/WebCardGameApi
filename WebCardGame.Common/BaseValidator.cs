@@ -22,10 +22,10 @@ namespace WebCardGame.Common
         public BaseValidator(BaseValidationModel baseValidationModel)
         {
             _baseValidationModel = baseValidationModel;
-            Errors = new List<string>();
+            Errors = new HashSet<string>();
         }
 
-        public List<string> Errors { get; set; }
+        public HashSet<string> Errors { get; set; }
 
         public void Validate(object entity)
         {
@@ -37,6 +37,10 @@ namespace WebCardGame.Common
             SetRulesForEffects();
             SetRulesForImageId();
             SetRulesForTypeId();
+            if (Errors.Any(x => !x.BeNotNull()))
+            {
+                Errors.Remove(null!);
+            }
         }
 
         private void SetRulesForName()

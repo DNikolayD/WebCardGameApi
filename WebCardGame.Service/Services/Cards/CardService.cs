@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using WebCardGame.Common;
 using WebCardGame.Common.Builders;
+using WebCardGame.Common.Extensions;
 using WebCardGame.Common.Logger;
 using WebCardGame.Common.ValidationModels;
 using WebCardGame.Data.DataEntities.CardDataEntities;
@@ -34,19 +35,22 @@ public class CardService : ICardService
 
     public async Task<BaseDtoResponse> AddAsync(BaseDtoRequest request)
     {
-        const string propertyName = nameof(AddAsync);
-
-        var baseDtoResponse = ResponseBuilder.BuildBaseResponse(_className, propertyName, request).MapTo(typeof(BaseDtoResponse)) as BaseDtoResponse;
+        var dtoToMap = ResponseBuilder.BuildBaseResponse(request.Origin, request.Type, request);
+        var baseDtoResponse = dtoToMap.MapTo(typeof(BaseDtoResponse)) as BaseDtoResponse;
+        baseDtoResponse.Errors = dtoToMap.Errors;
         if (baseDtoResponse.Errors.Any())
         {
+            baseDtoResponse.IsSuccessful = false;
             return baseDtoResponse;
         }
         var payload = request.Payload;
         await _repository.InsertAsync((BaseDataRequest)request.MapTo(typeof(BaseDataRequest)));
         await _repository.SaveAsync();
         _validator.Validate(payload);
-        baseDtoResponse.Errors = _validator.Errors;
-        baseDtoResponse.IsSuccessful = baseDtoResponse.Errors.All(x => x == null);
+        var errors = _validator.Errors.ToHashSet();
+        errors.RemoveWhere(x => !x.BeNotNull());
+        baseDtoResponse.Errors = errors.ToList();
+        baseDtoResponse.IsSuccessful = !baseDtoResponse.Errors.Any();
         baseDtoResponse.Payload = baseDtoResponse.IsSuccessful ? payload : new object();
         _logger.LogInformation(baseDtoResponse.GetMessage());
         return baseDtoResponse;
@@ -64,7 +68,7 @@ public class CardService : ICardService
         await _repository.UpdateAsync((BaseDataRequest)request.MapTo(typeof(BaseDataRequest)));
         await _repository.SaveAsync();
         _validator.Validate(payload);
-        baseDtoResponse.Errors = _validator.Errors;
+        baseDtoResponse.Errors = _validator.Errors.ToList();
         baseDtoResponse.IsSuccessful = !baseDtoResponse.Errors.Any();
         baseDtoResponse.Payload = baseDtoResponse.IsSuccessful ? payload : new object();
         _logger.LogInformation(baseDtoResponse.GetMessage());
@@ -99,7 +103,7 @@ public class CardService : ICardService
         var dataRequest = (BaseDataRequest)request.MapTo(typeof(BaseDataRequest));
         var responsePayload = (FullCardDto)(await _repository.GetByIdAsync(dataRequest)).Payload.MapTo(typeof(FullCardDto));
         _validator.Validate(responsePayload);
-        baseDtoResponse.Errors = _validator.Errors;
+        baseDtoResponse.Errors = _validator.Errors.ToList();
         baseDtoResponse.IsSuccessful = !baseDtoResponse.Errors.Any();
         baseDtoResponse.Payload = baseDtoResponse.IsSuccessful ? responsePayload : new object();
         _logger.LogInformation(baseDtoResponse.GetMessage());
@@ -116,7 +120,7 @@ public class CardService : ICardService
         }
         var responsePayload = (List<FullCardDto>)(await _repository.GetAllAsync()).Payload.MapTo(typeof(List<FullCardDto>)); 
         responsePayload.ForEach(rp => _validator.Validate(rp));
-        baseDtoResponse.Errors = _validator.Errors;
+        baseDtoResponse.Errors = _validator.Errors.ToList();
         baseDtoResponse.IsSuccessful = !baseDtoResponse.Errors.Any();
         baseDtoResponse.Payload = baseDtoResponse.IsSuccessful ? responsePayload : new object();
         _logger.LogInformation(baseDtoResponse.GetMessage());
@@ -134,7 +138,7 @@ public class CardService : ICardService
         var dataRequest = (BaseDataRequest)request.MapTo(typeof(BaseDataRequest));
         var responsePayload = (List<FullCardDto>)(await _repository.GetByIdAsync(dataRequest)).Payload.MapTo(typeof(List<FullCardDto>)); 
         responsePayload.ForEach(rp => _validator.Validate(rp));
-        baseDtoResponse.Errors = _validator.Errors;
+        baseDtoResponse.Errors = _validator.Errors.ToList();
         baseDtoResponse.IsSuccessful = !baseDtoResponse.Errors.Any();
         baseDtoResponse.Payload = baseDtoResponse.IsSuccessful ? responsePayload : new object();
         _logger.LogInformation(baseDtoResponse.GetMessage());

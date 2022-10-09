@@ -17,7 +17,7 @@ namespace WebCardGame.Data
             }
             else
             {
-                var entity = modelBuilder.Entity<IBaseDataEntity<int>>();
+                var entity = modelBuilder.Entity<DataEntityWithIntKey>();
 
                 entity.HasKey(e => e.Id);
             }
