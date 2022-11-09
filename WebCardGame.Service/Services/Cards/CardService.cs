@@ -118,7 +118,7 @@ public class CardService : ICardService
         {
             return baseDtoResponse;
         }
-        var responsePayload = (List<FullCardDto>)(await _repository.GetAllAsync()).Payload.MapTo(typeof(List<FullCardDto>)); 
+        var responsePayload = (List<FullCardDto>)(await _repository.GetAllAsync()).Payload.MapTo(typeof(List<FullCardDto>));
         responsePayload.ForEach(rp => _validator.Validate(rp));
         baseDtoResponse.Errors = _validator.Errors.ToList();
         baseDtoResponse.IsSuccessful = !baseDtoResponse.Errors.Any();
@@ -136,7 +136,7 @@ public class CardService : ICardService
             return baseDtoResponse;
         }
         var dataRequest = (BaseDataRequest)request.MapTo(typeof(BaseDataRequest));
-        var responsePayload = (List<FullCardDto>)(await _repository.GetByIdAsync(dataRequest)).Payload.MapTo(typeof(List<FullCardDto>)); 
+        var responsePayload = (List<FullCardDto>)(await _repository.GetByIdAsync(dataRequest)).Payload.MapTo(typeof(List<FullCardDto>));
         responsePayload.ForEach(rp => _validator.Validate(rp));
         baseDtoResponse.Errors = _validator.Errors.ToList();
         baseDtoResponse.IsSuccessful = !baseDtoResponse.Errors.Any();
@@ -161,11 +161,11 @@ public class CardService : ICardService
         var responseFromAll = await this.GetAllAsync(requestForGetAll);
         var cards = (responseFromAll.Payload as List<object>).Select(x => x.MapTo(typeof(FullCardDto)) as FullCardDto).ToList();
         cards = sortingInfos
-            .Aggregate(cards, (current, sortingInfo) 
-                => sortingInfo.IsDescending 
+            .Aggregate(cards, (current, sortingInfo)
+                => sortingInfo.IsDescending
                     ? current.OrderByDescending(x => x.GetType()
                     .GetProperty(sortingInfo.PropertyName).Name)
-                    .ToList() 
+                    .ToList()
                     : current.OrderBy(x => x.GetType()
                         .GetProperty(sortingInfo.PropertyName).Name).ToList());
         baseDtoResponse.Payload = cards;

@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebCardGame.Data\WebCardGame.Data.csproj" />
+    <Compile Remove="Validators\**" />
+    <EmbeddedResource Remove="Validators\**" />
+    <None Remove="Validators\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Validators\" />
+    <ProjectReference Include="..\WebCardGame.Data\WebCardGame.Data.csproj" />
   </ItemGroup>
 
 </Project>

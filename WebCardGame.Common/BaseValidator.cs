@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebCardGame.Common.Extensions;
-using WebCardGame.Common.Requests;
+﻿using WebCardGame.Common.Extensions;
 using WebCardGame.Common.ValidationModels;
-using static WebCardGame.Common.Checkers.ClassNames;
 using static WebCardGame.Common.Checkers.PropertyNames;
 using static WebCardGame.Common.DataConstraints.CardDataConstraints;
 using static WebCardGame.Common.DataConstraints.StandardDataConstraints;
@@ -116,7 +109,7 @@ namespace WebCardGame.Common
         }
 
         private void SetRulesForCreatorId()
-        {            
+        {
             var property = _entity.GetType().GetProperty("CreatorId").GetValue(_entity);
             _baseValidationModel.OriginProperty = CreatorPropertyName;
             _baseValidationModel.ErrorCode = BadRequest;

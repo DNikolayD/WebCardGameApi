@@ -1,19 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoFixture;
-using AutoFixture.Kernel;
-using FluentValidation;
-using FluentValidation.Results;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Abstractions;
-using Moq;
-using NUnit.Framework;
-using WebCardGame.Common.Logger;
-using WebCardGame.Data;
-using WebCardGame.Data.Repositories;
-
-namespace WebCardGame.Test.RepositoryTests.DeletableRepositoryTests
+﻿namespace WebCardGame.Test.RepositoryTests.DeletableRepositoryTests
 {
     public class DeletableRepositoryTests : BaseTest
     {/*

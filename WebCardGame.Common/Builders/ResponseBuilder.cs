@@ -1,5 +1,4 @@
-﻿using WebCardGame.Common.Checkers;
-using WebCardGame.Common.ErrorHandling;
+﻿using WebCardGame.Common.ErrorHandling;
 using WebCardGame.Common.Requests;
 using WebCardGame.Common.Responses;
 using WebCardGame.Common.ValidationModels;

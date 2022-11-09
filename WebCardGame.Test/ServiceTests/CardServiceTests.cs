@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoFixture;
+﻿using AutoFixture;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NUnit.Framework;
-using WebCardGame.Common.Extensions;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using WebCardGame.Common.Testing;
 using WebCardGame.Data.DataEntities.CardDataEntities;
 using WebCardGame.Data.Repositories;
@@ -61,10 +60,10 @@ namespace WebCardGame.Test.ServiceTests
                 .With(x => x.Payload, payload)
                 .Create();
 
-           var response = await _cardService.AddAsync(request);
+            var response = await _cardService.AddAsync(request);
 
-           Assert.IsNotNull(response);
-           Assert.IsTrue(response.IsSuccessful);
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.IsSuccessful);
         }
 
         [Test]

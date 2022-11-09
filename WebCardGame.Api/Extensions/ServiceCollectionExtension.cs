@@ -1,14 +1,14 @@
-﻿using System.Reflection;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using WebCardGame.Data.DataEntities.IdentityDataEntities;
-using WebCardGame.Data;
-using WebCardGame.Service.InjectionTypes;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 using WebCardGame.Common.Configuration;
+using WebCardGame.Data;
+using WebCardGame.Data.DataEntities.IdentityDataEntities;
 using WebCardGame.Data.Repositories;
+using WebCardGame.Service.InjectionTypes;
 
 namespace WebCardGame.Api.Extensions
 {
@@ -39,10 +39,10 @@ namespace WebCardGame.Api.Extensions
                 .GetExportedTypes()
                 .Where(x => x.IsClass && !x.IsAbstract)
                 .Select(x => new
-            {
-                Service = x.GetInterface($"I{x.Name}"),
-                Implementation = x
-            })
+                {
+                    Service = x.GetInterface($"I{x.Name}"),
+                    Implementation = x
+                })
                 .Where(x => x.Service != null);
 
             foreach (var type in types)
@@ -62,15 +62,15 @@ namespace WebCardGame.Api.Extensions
             }
         }
 
-/*        private static void AddDataEntityValidators(this IServiceCollection services)
-        {
-            var validatorType = typeof(AbstractValidator<>);
-            var types = validatorType.Assembly.GetExportedTypes().Where(x => x.IsClass && !x.IsAbstract);
-            foreach (var type in types)
-            {
-                services.AddTransient(validatorType, type);
-            }
-        }*/
+        /*        private static void AddDataEntityValidators(this IServiceCollection services)
+                {
+                    var validatorType = typeof(AbstractValidator<>);
+                    var types = validatorType.Assembly.GetExportedTypes().Where(x => x.IsClass && !x.IsAbstract);
+                    foreach (var type in types)
+                    {
+                        services.AddTransient(validatorType, type);
+                    }
+                }*/
 
         private static void AddCustomIdentity(this IServiceCollection services)
         {
